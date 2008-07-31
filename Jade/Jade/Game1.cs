@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
+using Jade.Components;
 
 namespace Jade
 {
@@ -16,13 +17,24 @@ namespace Jade
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        private GraphicsDeviceManager graphics;
+        private ContentManager content;
+        private SpriteBatch batch;
+        private Texture2D texture;
+        public static bool BGActive = true;
+        public static FPS FPS;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
+            content = new ContentManager(Services);
+
+            FPS = new FPS(this);
+
+            Components.Add(new ConsoleMenu(this));
+            Components.Add(FPS);
+
+            //Content.RootDirectory = "Content";
         }
 
         /// <summary>
@@ -44,8 +56,8 @@ namespace Jade
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            batch = new SpriteBatch(graphics.GraphicsDevice);
+            texture = content.Load<Texture2D>("Content/Textures/Sunset");
 
             // TODO: use this.Content to load your game content here
         }
@@ -56,7 +68,7 @@ namespace Jade
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+            content.Unload();
         }
 
         /// <summary>
@@ -83,7 +95,13 @@ namespace Jade
         {
             graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            if (BGActive == true)
+            {
+                batch.Begin();
+                batch.Draw(texture, new Rectangle(0, 0, graphics.GraphicsDevice.Viewport.Width, graphics.GraphicsDevice.Viewport.Height), Color.White);
+                batch.End();
+            }
+
 
             base.Draw(gameTime);
         }
