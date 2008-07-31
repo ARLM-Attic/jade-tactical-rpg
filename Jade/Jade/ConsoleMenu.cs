@@ -64,21 +64,17 @@ namespace Jade.Components
         #region Graphics Content
 
 
-        protected override void LoadGraphicsContent(bool loadAllContent)
+        protected override  void LoadContent()
         {
-            if (loadAllContent)
-            {
-                batch = new SpriteBatch(GraphicsDevice);
-                font = content.Load<SpriteFont>("Fonts/Console");
-            }
+            batch = new SpriteBatch(GraphicsDevice);
+            font = content.Load<SpriteFont>("Fonts/Console");
 
             texture = new ResolveTexture2D(GraphicsDevice, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, 1, GraphicsDevice.DisplayMode.Format);
 
             width = GraphicsDevice.Viewport.Width;
             height = GraphicsDevice.Viewport.Height / 2 - 100;
 
-
-            base.LoadGraphicsContent(loadAllContent);
+            base.LoadContent();
         }
 
 

@@ -23,16 +23,19 @@ namespace Jade
         private Texture2D texture;
         public static bool BGActive = true;
         public static FPS FPS;
+        private UniversalMouse uniMouse;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             content = new ContentManager(Services);
+            uniMouse = new UniversalMouse(this);
 
             FPS = new FPS(this);
 
             Components.Add(new ConsoleMenu(this));
             Components.Add(FPS);
+            Components.Add(uniMouse);
 
             //Content.RootDirectory = "Content";
         }
@@ -82,7 +85,13 @@ namespace Jade
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            // TODO: Add your update logic here
+            if (uniMouse.LeftButton == ButtonState.Pressed)
+                uniMouse.PointerColor = Color.Green;
+
+            else if (uniMouse.RightButton == ButtonState.Pressed)
+                uniMouse.PointerColor = Color.Red;
+            else
+                uniMouse.PointerColor = Color.White;
 
             base.Update(gameTime);
         }
