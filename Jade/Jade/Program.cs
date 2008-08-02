@@ -1,18 +1,23 @@
 using System;
+using JadeEngine;
+using JadeEngine.JadeObjects;
+using JadeEngine.JadeShaders;
 
 namespace Jade
 {
     static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
+        static JadeGame game = new JadeGame();
+        static JadeTexturedQuad quad = new JadeTexturedQuad(@"Content\Textures\Vagina");
+        static JadeShader shader = new JadeShader(@"Content\Shaders\TransformTexture"); 
+
         static void Main(string[] args)
         {
-            using (Game1 game = new Game1())
-            {
-                game.Run();
-            }
+            JadeShaderManager.AddShader("TT", shader);
+            quad.ShaderLabel = "TT";
+            JadeObjectManager.AddObject(quad);
+
+            game.Run();
         }
     }
 }

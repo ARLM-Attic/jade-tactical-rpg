@@ -2,10 +2,15 @@
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jade", "Jade\Jade.csproj", "{E37CBF41-F02B-434D-B1CA-B2A41D06A96A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{00DDF767-9629-4EB4-8866-F09734916308} = {00DDF767-9629-4EB4-8866-F09734916308}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JadeEngine", "JadeEngine\JadeEngine.csproj", "{00DDF767-9629-4EB4-8866-F09734916308}"
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 3
+		SccNumberOfProjects = 5
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs07.codeplex.com/
 		SccLocalPath0 = .
@@ -16,6 +21,13 @@ Global
 		SccProjectUniqueName2 = Jade\\Jade.csproj
 		SccProjectName2 = Jade
 		SccLocalPath2 = Jade
+		SccProjectUniqueName3 = JadeEngine\\JadeEngine.csproj
+		SccProjectName3 = JadeEngine
+		SccLocalPath3 = JadeEngine
+		SccProjectUniqueName4 = JadeEngine\\Content\\Content.contentproj
+		SccProjectTopLevelParentUniqueName4 = JadeEngine\\JadeEngine.csproj
+		SccProjectName4 = JadeEngine/Content
+		SccLocalPath4 = JadeEngine\\Content
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -28,6 +40,12 @@ Global
 		{E37CBF41-F02B-434D-B1CA-B2A41D06A96A}.Release|x86.Build.0 = Release|x86
 		{50CA4104-71FA-48E3-B7AB-FBE586F2595E}.Debug|x86.ActiveCfg = Debug|x86
 		{50CA4104-71FA-48E3-B7AB-FBE586F2595E}.Release|x86.ActiveCfg = Release|x86
+		{00DDF767-9629-4EB4-8866-F09734916308}.Debug|x86.ActiveCfg = Debug|x86
+		{00DDF767-9629-4EB4-8866-F09734916308}.Debug|x86.Build.0 = Debug|x86
+		{00DDF767-9629-4EB4-8866-F09734916308}.Release|x86.ActiveCfg = Release|x86
+		{00DDF767-9629-4EB4-8866-F09734916308}.Release|x86.Build.0 = Release|x86
+		{6FC1AB6B-609E-411F-848E-ADA26126B65F}.Debug|x86.ActiveCfg = Debug|x86
+		{6FC1AB6B-609E-411F-848E-ADA26126B65F}.Release|x86.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
