@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
+using JadeEngine.JadeObjects;
+using JadeEngine.JadeCameras;
 
 namespace JadeEngine.JadeShaders
 {
@@ -38,11 +40,17 @@ namespace JadeEngine.JadeShaders
 				: contentManager.Load<Effect>(Asset);
 		}
 
-        internal void SetParameters()
+        internal void SetParameters(JadeObject obj)
         {
-            if (null != MyEffect.Parameters["World"]) MyEffect.Parameters["World"].SetValue(Matrix.Identity);
-            if (null != MyEffect.Parameters["View"]) MyEffect.Parameters["View"].SetValue(Matrix.Identity);
-            if (null != MyEffect.Parameters["Project"]) MyEffect.Parameters["Project"].SetValue(Matrix.Identity);
+            Matrix world =
+                JadeCameraManager.ActiveCamera.World*
+                Matrix.CreateScale(obj.Scale)*
+                Matrix.CreateFromQuaternion(obj.Rotation)*
+                Matrix.CreateTranslation(obj.Position);
+
+            if (null != MyEffect.Parameters["World"]) MyEffect.Parameters["World"].SetValue(world);
+            if (null != MyEffect.Parameters["View"]) MyEffect.Parameters["View"].SetValue(JadeCameraManager.ActiveCamera.View);
+            if (null != MyEffect.Parameters["Project"]) MyEffect.Parameters["Project"].SetValue(JadeCameraManager.ActiveCamera.Projection);
         }
 	}
 }

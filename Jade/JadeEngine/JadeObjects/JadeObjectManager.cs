@@ -6,7 +6,7 @@ namespace JadeEngine.JadeObjects
 	{
 		private static JadeNode _rootNode;
 
-		private static JadeNode RootNode
+		public static JadeNode RootNode
 		{
 			get 
 			{
@@ -15,7 +15,6 @@ namespace JadeEngine.JadeObjects
 
 				return _rootNode; 
 			}
-			set { _rootNode = value; }
 		}
 
 		public static void AddObject(JadeObject obj)

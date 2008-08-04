@@ -28,15 +28,15 @@ namespace JadeEngine.JadeCameras
             SetViewport(viewport);
         }
 
-        private void SetViewport(Viewport viewport)
+        public void SetViewport(Viewport viewport)
         {
             _viewport = viewport;
 
             _viewport.MinDepth = 1.0f;
-            _viewport.MinDepth = 1000.0f;
+            _viewport.MaxDepth = 1000.0f;
         }
 
-        private void Update()
+        public void Update()
         {
             World = Matrix.Identity;
             View = Matrix.Invert(Matrix.CreateFromQuaternion(Rotation) * Matrix.CreateTranslation(Position));

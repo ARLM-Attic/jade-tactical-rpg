@@ -7,30 +7,13 @@ namespace JadeEngine.JadeObjects
 {
 	public class JadeObject
 	{
-		private Vector3 _position;
-		private Vector3 _scale;
-		private Quaternion _rotation;
-		protected string _shaderLabel;
+	    protected string _shaderLabel;
 
-		public Vector3 Position
-		{
-			get { return _position; }
-			set { _position = value; }
-		}
+	    public Vector3 Position { get; set; }
+	    public Vector3 Scale { get; set; }
+	    public Quaternion Rotation { get; set; }
 
-		public Vector3 Scale
-		{
-			get { return _scale; }
-			set { _scale = value; }
-		}
-
-		public Quaternion Rotation
-		{
-			get { return _rotation; }
-			set { _rotation = value; }
-		}
-
-		public string ShaderLabel
+	    public string ShaderLabel
 		{
 			protected get { return _shaderLabel; }
 			set { _shaderLabel = value; }
@@ -48,7 +31,7 @@ namespace JadeEngine.JadeObjects
 			if (this is IJadeRenderable)
 			{
 				JadeShader shader = JadeShaderManager.GetShader(ShaderLabel);
-                shader.SetParameters();
+                shader.SetParameters(this);
 
 				shader.MyEffect.Begin();
 				foreach(EffectPass pass in shader.MyEffect.CurrentTechnique.Passes)

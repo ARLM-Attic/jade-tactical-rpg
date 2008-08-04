@@ -80,6 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="JadeCameras\JadeCamera.cs" />
+    <Compile Include="JadeCameras\JadeCameraManager.cs" />
     <Compile Include="JadeGame.cs" />
     <Compile Include="JadeObjects\JadeNode.cs" />
     <Compile Include="JadeObjects\JadeNodeCollection.cs" />

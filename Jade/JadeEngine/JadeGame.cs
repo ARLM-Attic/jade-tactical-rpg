@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using JadeEngine.JadeObjects;
 using JadeEngine.JadeShaders;
+using JadeEngine.JadeCameras;
 
 namespace JadeEngine
 {
@@ -22,6 +23,7 @@ namespace JadeEngine
 		{
 			GDM.PreferredBackBufferWidth = Window.ClientBounds.Width;
 			GDM.PreferredBackBufferHeight = Window.ClientBounds.Height;
+            JadeCameraManager.UpdateViewports(GraphicsDevice.Viewport);
 		}
 
 		private GraphicsDeviceManager GDM
@@ -43,7 +45,8 @@ namespace JadeEngine
 
 		protected override void LoadContent()
 		{
-			JadeObjectManager.LoadContent(GraphicsDevice, Content);
+            JadeCameraManager.LoadContent(GraphicsDevice);
+			JadeObjectManager.RootNode.LoadContent(GraphicsDevice, Content);
 			JadeShaderManager.LoadContent(GraphicsDevice, Content);
 			base.LoadContent();
 		}
@@ -61,7 +64,7 @@ namespace JadeEngine
 
 			if(keyboardState.IsKeyDown(Keys.F))
 				GDM.ToggleFullScreen();
-
+            JadeCameraManager.ActiveCamera.Update();
 			base.Update(gameTime);
 		}
 	}
