@@ -8,6 +8,7 @@ namespace JadeEngine.JadeCameras
 {
     public class JadeCamera
     {
+        private Vector3 Target { get; set; }
         private Vector3 Position { get; set; }
         private Quaternion Rotation { get; set; }
         public Matrix World { get; private set; }
@@ -23,9 +24,15 @@ namespace JadeEngine.JadeCameras
         public JadeCamera(Viewport viewport)
         {
             Position = new Vector3(0, 0, 1);
+            Target = new Vector3(0, 0, 0);
             Rotation = new Quaternion(0, 0, 0, 1);
 
             SetViewport(viewport);
+        }
+
+        public void SetTarget(Vector3 target)
+        {
+            Target = target;
         }
 
         public void SetViewport(Viewport viewport)
@@ -34,6 +41,27 @@ namespace JadeEngine.JadeCameras
 
             _viewport.MinDepth = 1.0f;
             _viewport.MaxDepth = 1000.0f;
+        }
+
+        public void Rotate(Vector3 axis, float angle)
+        {
+            axis = Vector3.Transform(axis, Matrix.CreateFromQuaternion(Rotation));
+            Rotation = Quaternion.Normalize(Quaternion.CreateFromAxisAngle(axis, angle)*Rotation);
+            Update();
+        }
+
+        public void Translate(Vector3 distance)
+        {
+            Position += Vector3.Transform(distance, Matrix.CreateFromQuaternion(Rotation));
+            Update();
+        }
+
+        public void Revolve(Vector3 axis, float angle)
+        {
+            Vector3 revolveAxis = Vector3.Transform(axis, Matrix.CreateFromQuaternion(Rotation));
+            Quaternion rotate = Quaternion.CreateFromAxisAngle(revolveAxis, angle);
+            Position = Vector3.Transform(Position - Target, Matrix.CreateFromQuaternion(rotate)) + Target;
+            Rotate(axis, angle);
         }
 
         public void Update()

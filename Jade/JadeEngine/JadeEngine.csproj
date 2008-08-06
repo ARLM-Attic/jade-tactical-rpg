@@ -76,12 +76,19 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="JadeCameras\JadeCamera.cs" />
     <Compile Include="JadeCameras\JadeCameraManager.cs" />
     <Compile Include="JadeGame.cs" />
+    <Compile Include="JadeInputs\Delegates.cs" />
+    <Compile Include="JadeInputs\JadeInputDevice.cs" />
+    <Compile Include="JadeInputs\JadeInputFunctions.cs" />
+    <Compile Include="JadeInputs\JadeInputManager.cs" />
+    <Compile Include="JadeInputs\JadeKeyboardDevice.cs" />
+    <Compile Include="JadeInputs\JadeMouseDevice.cs" />
     <Compile Include="JadeObjects\JadeNode.cs" />
     <Compile Include="JadeObjects\JadeNodeCollection.cs" />
     <Compile Include="JadeObjects\JadeObject.cs" />

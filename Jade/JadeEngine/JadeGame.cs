@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using JadeEngine.JadeObjects;
 using JadeEngine.JadeShaders;
 using JadeEngine.JadeCameras;
+using JadeEngine.JadeInputs;
 
 namespace JadeEngine
 {
@@ -40,6 +41,7 @@ namespace JadeEngine
 		protected override void Initialize()
 		{
 			JadeShaderManager.Initalize();
+            JadeInputManager.Initialize(this);
 			base.Initialize();
 		}
 
@@ -60,12 +62,25 @@ namespace JadeEngine
 
 		protected override void Update(GameTime gameTime)
 		{
-			KeyboardState keyboardState = Keyboard.GetState();
-
-			if(keyboardState.IsKeyDown(Keys.F))
-				GDM.ToggleFullScreen();
+			JadeInputManager.Update();
             JadeCameraManager.ActiveCamera.Update();
 			base.Update(gameTime);
 		}
+
+        public void ToggleFullScreen()
+        {
+            if (GDM.IsFullScreen)
+            {
+                GDM.PreferredBackBufferWidth = 800;
+                GDM.PreferredBackBufferHeight = 600;
+            }
+            else
+            {
+                GDM.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
+                GDM.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
+            }
+
+            GDM.ToggleFullScreen();
+        }
 	}
 }
