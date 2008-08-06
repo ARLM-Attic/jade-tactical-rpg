@@ -2,13 +2,23 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using JadeEngine.JadeShaders;
+using Microsoft.Xna.Framework;
+using JadeEngine.JadeCameras;
 
 namespace JadeEngine.JadeObjects
 {
-    public class JadeModel : JadeObject, IJadeLoadable, IJadeChildRenderer
+    public class JadeModel : JadeObject, IJadeLoadable, IJadeChildRenderer, IJadeHasMaterial
     {
+        private Vector3 _ambientColor = new Vector3(0.25f);
+        private Vector3 _diffuesColor = new Vector3(0.50f);
+        private float _specularPower = 32;
+
         private string Asset { get; set; }
         private Model Model { get; set; }
+
+        private Vector3 AmbientLightColor { get { return _ambientColor; } }
+        private Vector3 DiffuseLightColor { get { return _diffuesColor; } }
+        private float SpecularPower { get { return _specularPower; } }
 
         public JadeModel(string asset)
         {
@@ -22,14 +32,14 @@ namespace JadeEngine.JadeObjects
 
         public void RenderChildren(GraphicsDevice gd)
         {
-            JadeShader shader = JadeShaderManager.GetShader(ShaderLabel);
+            JadeEffect shader = JadeShaderManager.GetShader(ShaderLabel);
             shader.SetParameters(this);
             foreach (ModelMesh mesh in Model.Meshes)
             {
                 gd.Indices = mesh.IndexBuffer;
-                shader.MyEffect.Begin();
+                shader.Effect.Begin();
 
-                foreach(EffectPass pass in shader.MyEffect.CurrentTechnique.Passes)
+                foreach(EffectPass pass in shader.Effect.CurrentTechnique.Passes)
                 {
                     pass.Begin();
                     foreach(ModelMeshPart part in mesh.MeshParts)
@@ -42,8 +52,49 @@ namespace JadeEngine.JadeObjects
                     }
                     pass.End();
                 }
-                shader.MyEffect.End();
+                shader.Effect.End();
             }
+        }
+
+        public void SetAmbientLightColor(Vector3 color)
+        {
+            _ambientColor = color;
+        }
+
+        public void SetDiffuseLightColor(Vector3 color)
+        {
+            _diffuesColor = color;
+        }
+
+        public void SetSpecularPower(float power)
+        {
+
+        }
+
+        public void SetMaterialProperties()
+        {
+            Effect effect = JadeShaderManager.GetShader(ShaderLabel).Effect;
+
+            if(effect.Parameters["AmbientLightColor"] != null)
+                effect.Parameters["AmbientLightColor"].SetValue(AmbientLightColor);
+
+            if (effect.Parameters["EyePosition"] != null) 
+                effect.Parameters["EyePosition"].SetValue(JadeCameraManager.ActiveCamera.Position);
+
+            if (effect.Parameters["LightDirection"] != null)
+                effect.Parameters["LightDirection"].SetValue(new Vector3(1, -1, -1));
+
+            if (effect.Parameters["LightDiffuseColor"] != null)
+                effect.Parameters["LightDiffuseColor"].SetValue(new Vector3(0.25f, 0.25f, 1.0f));
+
+            if (effect.Parameters["DiffuseColor"] != null) 
+                effect.Parameters["DiffuseColor"].SetValue(DiffuseLightColor);
+
+            if (effect.Parameters["LightSpecularColor"] != null)
+                effect.Parameters["LightSpecularColor"].SetValue(new Vector3(0.85f, 0.85f, 1.0f));
+
+            if (effect.Parameters["SpecularPower"] != null) 
+                effect.Parameters["SpecularPower"].SetValue(SpecularPower);
         }
     }
 }

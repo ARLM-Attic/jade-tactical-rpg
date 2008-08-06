@@ -8,43 +8,69 @@ namespace JadeEngine.JadeShaders
 {
 	public class JadeShaderManager
 	{
-		private static Dictionary<string, JadeShader> _shaders;
+		private static Dictionary<string, JadeEffect> _effects;
+	    private static Dictionary<string, JadeShader> _postProcessors;
 
-		private static Dictionary<string, JadeShader> Shaders
+		private static Dictionary<string, JadeEffect> Effects
 		{
 			get
 			{
-				if (_shaders == null)
-					_shaders = new Dictionary<string, JadeShader>();
+				if (_effects == null)
+					_effects = new Dictionary<string, JadeEffect>();
 
-				return _shaders;
+				return _effects;
 			}
-			set { _shaders = value; }
+			set { _effects = value; }
+		}
+        private static Dictionary<string, JadeShader> PostProcessors
+        {
+            get
+            {
+                if (_postProcessors == null)
+                    _postProcessors = new Dictionary<string, JadeShader>();
+
+                return _postProcessors;
+            }
+            set { _postProcessors = value; }
+        }
+
+		public static void AddEffect(string shaderLabel, JadeEffect shader)
+		{
+			Effects.Add(shaderLabel, shader);
 		}
 
-		public static void AddShader(string shaderLabel, JadeShader shader)
-		{
-			Shaders.Add(shaderLabel, shader);
-		}
+        public static void AddPostProcessor(string shaderLabel, JadePostProcessor postProcessor)
+        {
+            PostProcessors.Add(shaderLabel, postProcessor);
+        }
 
-		internal static JadeShader GetShader(string shaderLabel)
+		internal static JadeEffect GetShader(string shaderLabel)
 		{
-			if(!String.IsNullOrEmpty(shaderLabel) && Shaders.ContainsKey(shaderLabel))
-				return Shaders[shaderLabel];
+			if(!String.IsNullOrEmpty(shaderLabel) && Effects.ContainsKey(shaderLabel))
+				return Effects[shaderLabel];
 
-			return Shaders["Microsoft.Xna.Framework.Graphics.BasicEffect"];
+			return Effects["Microsoft.Xna.Framework.Graphics.BasicEffect"];
 		}
 
 		internal static void Initalize()
 		{
-			JadeShader basicEffect = new JadeShader();
-			Shaders.Add("Microsoft.Xna.Framework.Graphics.BasicEffect", basicEffect);
+			JadeEffect basicEffect = new JadeEffect();
+			Effects.Add("Microsoft.Xna.Framework.Graphics.BasicEffect", basicEffect);
 		}
 
-		internal static void LoadContent(GraphicsDevice graphicsDevice, ContentManager contentManager)
+		internal static void LoadContent(GraphicsDevice gd, ContentManager cm)
 		{
-			foreach (JadeShader shader in Shaders.Values)
-				shader.LoadContent(graphicsDevice, contentManager);
+			foreach (JadeShader shader in Effects.Values)
+				shader.LoadContent(gd, cm);
+
+            foreach (JadeShader shader in PostProcessors.Values)
+                shader.LoadContent(gd, cm);
 		}
+
+        internal static void PostProcess(GraphicsDevice gd)
+        {
+            foreach(JadePostProcessor post in PostProcessors.Values)
+                post.Draw(gd);
+        }
 	}
 }

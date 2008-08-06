@@ -13,8 +13,8 @@ namespace Jade
     static class Program
     {
         static JadeGame game = new JadeGame();
-        static JadeTexturedQuad quad = new JadeTexturedQuad(@"Content\Textures\Vagina");
-        static JadeShader shader = new JadeShader(@"Content\Shaders\TransformTexture"); 
+        static JadeEffect shader = new JadeEffect(@"Content\Shaders\TransformTexture");
+        static JadeEffect basicShader = new JadeEffect(@"Content\Shaders\BasicShader");
         static JadeKeyboardDevice keyboard = new JadeKeyboardDevice();
         static JadeMouseDevice mouse = new JadeMouseDevice();
         static bool Clicked { get; set; }
@@ -33,6 +33,8 @@ namespace Jade
 
         static void Main(string[] args)
         {
+            sword.SetScale(new Vector3(0.02f));
+            sword.SetPosition(new Vector3(sword.Position.X, sword.Position.Y, sword.Position.Z + 2.5f));
             game.IsMouseVisible = true;
 
             JadeInputManager.AddDevice(keyboard);
@@ -43,10 +45,10 @@ namespace Jade
             mouse.OnClick += mouse_OnClick;
             mouse.OnRelease += mouse_OnRelease;
 
-            JadeShaderManager.AddShader("TT", shader);
-            //quad.ShaderLabel = "TT";
+            JadeShaderManager.AddEffect("TT", shader);
+            JadeShaderManager.AddEffect("BS", basicShader);
             skybox.ShaderLabel = "TT";
-            sword.ShaderLabel = "TT";
+            sword.ShaderLabel = "BS";
 
             JadeObjectManager.AddObject(skybox);
             JadeObjectManager.AddObject(sword);
@@ -83,7 +85,6 @@ namespace Jade
         static void keyboard_OnKeyRelease(Collection<Keys> keys)
         {
             if(keys.Contains(Keys.F))  game.ToggleFullScreen();
-           // if(keys.Contains(Keys.M)) JadeCameraManager.ActiveCamera.SetTarget(sword.Position);
         }
     }
 }

@@ -94,6 +94,7 @@
     <Compile Include="JadeObjects\JadeNodeCollection.cs" />
     <Compile Include="JadeObjects\JadeObject.cs" />
     <Compile Include="JadeObjects\JadeObjectComponents\IJadeChildRenderer.cs" />
+    <Compile Include="JadeObjects\JadeObjectComponents\IJadeHasMaterial.cs" />
     <Compile Include="JadeObjects\JadeObjectComponents\IJadeLoadable.cs" />
     <Compile Include="JadeObjects\JadeObjectComponents\IJadeObjectComponent.cs" />
     <Compile Include="JadeObjects\JadeObjectComponents\IJadeRenderable.cs" />
@@ -101,6 +102,8 @@
     <Compile Include="JadeObjects\JadeObjectNode.cs" />
     <Compile Include="JadeObjects\JadeSkyBox.cs" />
     <Compile Include="JadeObjects\JadeTexturedQuad.cs" />
+    <Compile Include="JadeShaders\JadeEffect.cs" />
+    <Compile Include="JadeShaders\JadePostProcessor.cs" />
     <Compile Include="JadeShaders\JadeShader.cs" />
     <Compile Include="JadeShaders\JadeShaderManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

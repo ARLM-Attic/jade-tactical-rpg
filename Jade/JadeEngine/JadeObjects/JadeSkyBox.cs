@@ -16,7 +16,7 @@ namespace JadeEngine.JadeObjects
         public JadeSkyBox(string[] textures)
         {
             Files = textures;
-            Scale = new Vector3(500);
+            SetScale(new Vector3(500));
             Sides = new JadeTexturedQuad[6];
 
             CreateSides();
@@ -28,14 +28,14 @@ namespace JadeEngine.JadeObjects
             for(int i = 0; i < 6; i++)
             {
                 Sides[i] = new JadeTexturedQuad(Files[i]);
-                Sides[i].Scale = Scale;
+                Sides[i].SetScale(Scale);
             }
 
-            Sides[0].Rotation = Quaternion.CreateFromAxisAngle(new Vector3(1, 0, 0), MathHelper.PiOver2);
-            Sides[1].Rotation = Quaternion.CreateFromAxisAngle(new Vector3(1, 0, 0), -MathHelper.PiOver2);
-            Sides[2].Rotation = Quaternion.CreateFromAxisAngle(new Vector3(0, 1, 0), MathHelper.PiOver2);
-            Sides[3].Rotation = Quaternion.CreateFromAxisAngle(new Vector3(0, 1, 0), -MathHelper.PiOver2);
-            Sides[5].Rotation = Quaternion.CreateFromAxisAngle(new Vector3(0, 1, 0), MathHelper.Pi);
+            Sides[0].SetRotation(Quaternion.CreateFromAxisAngle(new Vector3(1, 0, 0), MathHelper.PiOver2));
+            Sides[1].SetRotation(Quaternion.CreateFromAxisAngle(new Vector3(1, 0, 0), -MathHelper.PiOver2));
+            Sides[2].SetRotation(Quaternion.CreateFromAxisAngle(new Vector3(0, 1, 0), MathHelper.PiOver2));
+            Sides[3].SetRotation(Quaternion.CreateFromAxisAngle(new Vector3(0, 1, 0), -MathHelper.PiOver2));
+            Sides[5].SetRotation(Quaternion.CreateFromAxisAngle(new Vector3(0, 1, 0), MathHelper.Pi));
         }
 
         private void CalculateOffsets()
@@ -58,14 +58,14 @@ namespace JadeEngine.JadeObjects
 
         public void RenderChildren(GraphicsDevice gd)
         {
-            JadeShader shader = JadeShaderManager.GetShader(ShaderLabel);
+            JadeEffect shader = JadeShaderManager.GetShader(ShaderLabel);
 
-            shader.MyEffect.Begin();
-            foreach(EffectPass pass in shader.MyEffect.CurrentTechnique.Passes)
+            shader.Effect.Begin();
+            foreach(EffectPass pass in shader.Effect.CurrentTechnique.Passes)
             {
                 for(int i = 0; i < 6; i++)
                 {
-                    Sides[i].Position = JadeCameraManager.ActiveCamera.Position + Offsets[i];
+                    Sides[i].SetPosition(JadeCameraManager.ActiveCamera.Position + Offsets[i]);
 
                     shader.SetParameters(Sides[i]);
 
@@ -74,7 +74,7 @@ namespace JadeEngine.JadeObjects
                     pass.End();
                 }
             }
-            shader.MyEffect.End();
+            shader.Effect.End();
         }
     }
 }

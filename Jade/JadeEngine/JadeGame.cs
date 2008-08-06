@@ -58,6 +58,7 @@ namespace JadeEngine
 			GraphicsDevice.Clear(Color.CornflowerBlue);
 			JadeObjectManager.Draw(GraphicsDevice);
 			base.Draw(gameTime);
+            JadeShaderManager.PostProcess(GraphicsDevice);
 		}
 
 		protected override void Update(GameTime gameTime)
