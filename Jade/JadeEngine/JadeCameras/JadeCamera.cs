@@ -9,7 +9,7 @@ namespace JadeEngine.JadeCameras
     public class JadeCamera
     {
         private Vector3 Target { get; set; }
-        private Vector3 Position { get; set; }
+        public Vector3 Position { get; private set; }
         private Quaternion Rotation { get; set; }
         public Matrix World { get; private set; }
         public Matrix View { get; private set; }

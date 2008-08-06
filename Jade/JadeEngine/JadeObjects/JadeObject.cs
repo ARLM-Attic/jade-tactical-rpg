@@ -26,7 +26,7 @@ namespace JadeEngine.JadeObjects
 			Rotation = new Quaternion(0,0,0,1);
 		}
 
-		public void Draw(GraphicsDevice graphicsDevice)
+		public void Draw(GraphicsDevice gd)
 		{
 			if (this is IJadeRenderable)
 			{
@@ -37,11 +37,13 @@ namespace JadeEngine.JadeObjects
 				foreach(EffectPass pass in shader.MyEffect.CurrentTechnique.Passes)
 				{
 					pass.Begin();
-					((IJadeRenderable) this).Render(graphicsDevice);
+					((IJadeRenderable) this).Render(gd);
 					pass.End();
 				}
 				shader.MyEffect.End();
 			}
+
+            if(this is IJadeChildRenderer)((IJadeChildRenderer)this).RenderChildren(gd);
 		}
 	}
 }

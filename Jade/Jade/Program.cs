@@ -19,6 +19,17 @@ namespace Jade
         static JadeMouseDevice mouse = new JadeMouseDevice();
         static bool Clicked { get; set; }
 
+        static string[] sky = {
+                                    @"Content/Textures/Skybox/top", 
+                                    @"Content/Textures/Skybox/bottom", 
+                                    @"Content/Textures/Skybox/left", 
+                                    @"Content/Textures/Skybox/right", 
+                                    @"Content/Textures/Skybox/front", 
+                                    @"Content/Textures/Skybox/back"
+                              };
+
+        static JadeSkyBox skybox = new JadeSkyBox(sky);
+
         static void Main(string[] args)
         {
             game.IsMouseVisible = true;
@@ -33,8 +44,10 @@ namespace Jade
 
             JadeShaderManager.AddShader("TT", shader);
             quad.ShaderLabel = "TT";
+            skybox.ShaderLabel = "TT";
 
             JadeObjectManager.AddObject(quad);
+            JadeObjectManager.AddObject(skybox);
             game.Run();
         }
 
