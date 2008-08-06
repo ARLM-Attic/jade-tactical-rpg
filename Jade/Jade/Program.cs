@@ -29,6 +29,7 @@ namespace Jade
                               };
 
         static JadeSkyBox skybox = new JadeSkyBox(sky);
+        static JadeModel sword = new JadeModel(@"Content/Models/KunaiBlack");
 
         static void Main(string[] args)
         {
@@ -43,11 +44,12 @@ namespace Jade
             mouse.OnRelease += mouse_OnRelease;
 
             JadeShaderManager.AddShader("TT", shader);
-            quad.ShaderLabel = "TT";
+            //quad.ShaderLabel = "TT";
             skybox.ShaderLabel = "TT";
+            sword.ShaderLabel = "TT";
 
-            JadeObjectManager.AddObject(quad);
             JadeObjectManager.AddObject(skybox);
+            JadeObjectManager.AddObject(sword);
             game.Run();
         }
 
@@ -65,7 +67,7 @@ namespace Jade
 
         static void mouse_OnScroll(int ticks)
         {
-            float distance = ticks / 1000.0f;
+            float distance = ticks / 100.0f;
             JadeCameraManager.ActiveCamera.Translate(new Vector3(0, 0, distance));
         }
 
@@ -81,6 +83,7 @@ namespace Jade
         static void keyboard_OnKeyRelease(Collection<Keys> keys)
         {
             if(keys.Contains(Keys.F))  game.ToggleFullScreen();
+           // if(keys.Contains(Keys.M)) JadeCameraManager.ActiveCamera.SetTarget(sword.Position);
         }
     }
 }

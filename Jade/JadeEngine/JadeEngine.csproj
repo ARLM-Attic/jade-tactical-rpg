@@ -89,6 +89,7 @@
     <Compile Include="JadeInputs\JadeInputManager.cs" />
     <Compile Include="JadeInputs\JadeKeyboardDevice.cs" />
     <Compile Include="JadeInputs\JadeMouseDevice.cs" />
+    <Compile Include="JadeObjects\JadeModel.cs" />
     <Compile Include="JadeObjects\JadeNode.cs" />
     <Compile Include="JadeObjects\JadeNodeCollection.cs" />
     <Compile Include="JadeObjects\JadeObject.cs" />

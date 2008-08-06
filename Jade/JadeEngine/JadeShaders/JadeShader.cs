@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 using JadeEngine.JadeObjects;
 using JadeEngine.JadeCameras;
+using JadeEngine.JadeObjects.JadeObjectComponents;
 
 namespace JadeEngine.JadeShaders
 {
@@ -33,7 +34,7 @@ namespace JadeEngine.JadeShaders
 			Asset = asset;
 		}
 
-		internal void LoadContent(GraphicsDevice graphicsDevice, ContentManager contentManager)
+        internal void LoadContent(GraphicsDevice graphicsDevice, ContentManager contentManager)
 		{
 			MyEffect = (Asset.Equals("Microsoft.Xna.Framework.Graphics.BasicEffect"))
 				? new BasicEffect(graphicsDevice, null) 
@@ -52,5 +53,5 @@ namespace JadeEngine.JadeShaders
             if (null != MyEffect.Parameters["View"]) MyEffect.Parameters["View"].SetValue(JadeCameraManager.ActiveCamera.View);
             if (null != MyEffect.Parameters["Project"]) MyEffect.Parameters["Project"].SetValue(JadeCameraManager.ActiveCamera.Projection);
         }
-	}
+    }
 }

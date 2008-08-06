@@ -44,14 +44,13 @@ namespace JadeEngine.JadeObjects
 			Asset = asset;
 		}
 
-		public void Render(Microsoft.Xna.Framework.Graphics.GraphicsDevice graphicsDevice)
+		public void Render(GraphicsDevice graphicsDevice)
 		{
 			using(VertexDeclaration declaration = new VertexDeclaration(graphicsDevice, VertexPositionTexture.VertexElements))
 			{
 				graphicsDevice.VertexDeclaration = declaration;
 				graphicsDevice.Textures[0] = MyTexture;
-				graphicsDevice.DrawUserIndexedPrimitives<VertexPositionTexture>(PrimitiveType.TriangleList, Vertices, 0, 4, Inds, 0,
-				                                                                2);
+				graphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, Vertices, 0, 4, Inds, 0, 2);
 			}
 		}
 
