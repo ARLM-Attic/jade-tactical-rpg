@@ -12,6 +12,9 @@ namespace Jade
 {
     static class Program
     {
+        public static readonly float ROTATION_SPEED = 0.05f;
+        public static readonly float CAMERA_SPEED = 0.001f;
+
         static JadeGame game = new JadeGame();
         static JadeEffect shader = new JadeEffect(@"Content\Shaders\TransformTexture");
         static JadeEffect basicShader = new JadeEffect(@"Content\Shaders\BasicShader");
@@ -20,26 +23,31 @@ namespace Jade
         static bool Clicked { get; set; }
 
         static string[] sky = {
-                                    @"Content/Textures/Skybox/top", 
-                                    @"Content/Textures/Skybox/bottom", 
-                                    @"Content/Textures/Skybox/left", 
-                                    @"Content/Textures/Skybox/right", 
-                                    @"Content/Textures/Skybox/front", 
-                                    @"Content/Textures/Skybox/back"
+                                    @"Content/Textures/Skybox/Stars-01", 
+                                    @"Content/Textures/Skybox/Stars-01", 
+                                    @"Content/Textures/Skybox/Stars-01", 
+                                    @"Content/Textures/Skybox/Stars-01", 
+                                    @"Content/Textures/Skybox/Stars-01", 
+                                    @"Content/Textures/Skybox/Stars-01"
                               };
 
         static JadeSkyBox skybox = new JadeSkyBox(sky);
-        static JadeModel sword = new JadeModel(@"Content/Models/KunaiBlack");
+        static JadeModel sword = new JadeModel(@"Content/Models/TestCube");
 
         static void Main(string[] args)
         {
-            sword.SetScale(new Vector3(0.02f));
-            sword.SetPosition(new Vector3(sword.Position.X, sword.Position.Y, sword.Position.Z + 2.5f));
+            sword.SetScale(new Vector3(0.25f));
+            sword.SetAmbientLightColor(new Vector3(0.2f));
+            sword.SetDiffuseLightColor(new Vector3(0.2f));
+            sword.SetSpecularLightColor(new Vector3(0.0f));
+            sword.SetPosition(new Vector3(sword.Position.X, sword.Position.Y, sword.Position.Z - 2.5f));
+
             game.IsMouseVisible = true;
 
             JadeInputManager.AddDevice(keyboard);
             JadeInputManager.AddDevice(mouse);
             keyboard.OnKeyRelease += keyboard_OnKeyRelease;
+            keyboard.OnKeyHeld += keyboard_OnKeyHeld;
             mouse.OnMove += mouse_OnMove;
             mouse.OnScroll += mouse_OnScroll;
             mouse.OnClick += mouse_OnClick;
@@ -53,6 +61,21 @@ namespace Jade
             JadeObjectManager.AddObject(skybox);
             JadeObjectManager.AddObject(sword);
             game.Run();
+        }
+
+        static void keyboard_OnKeyHeld(Collection<Keys> keys)
+        {
+            if (keys.Contains(Keys.Left))
+                sword.Rotate(Vector3.Up, -ROTATION_SPEED);
+
+            if (keys.Contains(Keys.Right))
+                sword.Rotate(Vector3.Up, ROTATION_SPEED);
+
+            if(keys.Contains(Keys.Up))
+                sword.Rotate(Vector3.Right, -ROTATION_SPEED);
+
+            if (keys.Contains(Keys.Down))
+                sword.Rotate(Vector3.Right, ROTATION_SPEED);
         }
 
         static void mouse_OnRelease(Point position, Collection<JadeMouseButton> buttons)
@@ -69,7 +92,7 @@ namespace Jade
 
         static void mouse_OnScroll(int ticks)
         {
-            float distance = ticks / 100.0f;
+            float distance = ticks / 1000.0f;
             JadeCameraManager.ActiveCamera.Translate(new Vector3(0, 0, distance));
         }
 
@@ -77,8 +100,11 @@ namespace Jade
         {
             if (Clicked)
             {
-                JadeCameraManager.ActiveCamera.Revolve(new Vector3(1, 0, 0), move.Y*0.001f);
-                JadeCameraManager.ActiveCamera.Revolve(new Vector3(0, 1, 0), move.X*0.001f);
+				if(JadeCameraManager.ActiveCamera.Target != sword.Position)
+					JadeCameraManager.ActiveCamera.SetTarget(sword.Position);
+
+                JadeCameraManager.ActiveCamera.Revolve(Vector3.Right, move.Y * CAMERA_SPEED);
+				JadeCameraManager.ActiveCamera.Revolve(Vector3.Up, move.X * CAMERA_SPEED);
             }
         }
 

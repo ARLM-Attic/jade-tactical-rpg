@@ -9,10 +9,13 @@ float3 LightDiffuseColor;
 float SpecularPower;
 float3 LightSpecularColor;
 
+sampler TextureSampler; 
+
 struct VS_INPUT 
 { 
 	float4 Position : POSITION0;
 	float3 Normal	: NORMAL0;
+	float2 Texcoord : TEXCOORD0;
 }; 
 
 struct VS_OUTPUT 
@@ -20,12 +23,14 @@ struct VS_OUTPUT
 	float4 Position			: POSITION0; 
 	float3 Normal			: TEXCOORD1;
 	float3 ViewDirection	: TEXCOORD2;
+	float2 Texcoord			: TEXCOORD0;
 }; 
 
 struct PS_INPUT
 {
 	float3 Normal			: TEXCOORD1;
 	float3 ViewDirection	: TEXCOORD2;
+	float2 Texcoord			: TEXCOORD0;
 };
 
 VS_OUTPUT Transform(VS_INPUT Input)
@@ -37,6 +42,7 @@ VS_OUTPUT Transform(VS_INPUT Input)
 	Output.Position			= mul(Input.Position, WorldViewProject); 
 	Output.Normal			= mul(Input.Normal, World);
 	Output.ViewDirection	= EyePosition - ObjectPosition;
+	Output.Texcoord			= Input.Texcoord; 
 	
 	return Output; 
 } 
@@ -57,8 +63,9 @@ float4 BasicShader(PS_INPUT Input) : COLOR0
 	float RDotV				= max(0.0f, dot(Reflection, ViewDirection));
 	float3 TotalSpecular	= saturate(LightSpecularColor * pow(RDotV, SpecularPower));
 	
-	float4 FinalColor = float4(saturate(TotalAmbient + TotalDiffuse + TotalSpecular), 1.0f); 
-	return FinalColor;
+	float4 FinalColor		= float4(saturate(TotalAmbient + TotalDiffuse + TotalSpecular), 1.0f); 
+	float4 Texture			= tex2D(TextureSampler, Input.Texcoord);
+	return Texture + FinalColor;
 }
  
 technique BasicShader 

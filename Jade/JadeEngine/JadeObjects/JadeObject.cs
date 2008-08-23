@@ -73,5 +73,11 @@ namespace JadeEngine.JadeObjects
 
             if(this is IJadeChildRenderer)((IJadeChildRenderer)this).RenderChildren(gd);
 		}
+
+        public void Rotate(Vector3 axis, float angle)
+        {
+            axis = Vector3.Transform(axis, Matrix.CreateFromQuaternion(Rotation));
+            SetRotation(Quaternion.Normalize(Quaternion.CreateFromAxisAngle(axis, angle) * Rotation));
+        }
 	}
 }

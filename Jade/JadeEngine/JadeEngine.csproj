@@ -80,6 +80,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="JadeObjects\JadeScene\JadeSceneManager.cs" />
     <Compile Include="JadeShaders\JadeDepthOfField.cs" />
     <Compile Include="JadeCameras\JadeCamera.cs" />
     <Compile Include="JadeCameras\JadeCameraManager.cs" />
