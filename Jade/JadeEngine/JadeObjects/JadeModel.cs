@@ -9,18 +9,16 @@ namespace JadeEngine.JadeObjects
 {
     public class JadeModel : JadeObject, IJadeLoadable, IJadeChildRenderer, IJadeHasMaterial
     {
-        private Vector3 _ambientColor = new Vector3(0.25f);
-        private Vector3 _diffuesColor = new Vector3(0.50f);
-        private Vector3 _specularColor = new Vector3(0.1f);
-        private float _specularPower = 32;
+        private Vector4 _materialDiffuesColor = new Vector4(0, 0.15f, 0, 1);
+		private Vector4 _materialSpecularColor = new Vector4(1);
+        private float _materialSpecularPower = 3000;
 
         private string Asset { get; set; }
         private Model Model { get; set; }
 
-        private Vector3 AmbientLightColor { get { return _ambientColor; } }
-        private Vector3 DiffuseLightColor { get { return _diffuesColor; } }
-        private Vector3 SpecularLightColor { get { return _specularColor; } }
-        private float SpecularPower { get { return _specularPower; } }
+        private Vector4 MaterialDiffuseColor { get { return _materialDiffuesColor; } }
+        private Vector4 MaterialSpecularColor { get { return _materialSpecularColor; } }
+        private float MaterialSpecularPower { get { return _materialSpecularPower; } }
 
         public JadeModel(string asset)
         {
@@ -58,50 +56,33 @@ namespace JadeEngine.JadeObjects
             }
         }
 
-        public void SetAmbientLightColor(Vector3 color)
+        public void SetMaterialDiffuseColor(Vector4 color)
         {
-            _ambientColor = color;
+			_materialDiffuesColor = color;
         }
 
-        public void SetDiffuseLightColor(Vector3 color)
+        public void SetMaterialSpecularColor(Vector4 color)
         {
-            _diffuesColor = color;
-        }
-
-        public void SetSpecularLightColor(Vector3 color)
-        {
-            _specularColor = color;
+			_materialSpecularColor = color;
         }
         
-        public void SetSpecularPower(float power)
+        public void SetMaterialSpecularPower(float power)
         {
-            _specularPower = power;
+			_materialSpecularPower = power;
         }
 
         public void SetMaterialProperties()
         {
             Effect effect = JadeShaderManager.GetShader(ShaderLabel).Effect;
 
-            if(effect.Parameters["AmbientLightColor"] != null)
-                effect.Parameters["AmbientLightColor"].SetValue(AmbientLightColor);
+			if (effect.Parameters["MaterialDiffuseColor"] != null)
+				effect.Parameters["MaterialDiffuseColor"].SetValue(MaterialDiffuseColor);
 
-            if (effect.Parameters["EyePosition"] != null) 
-                effect.Parameters["EyePosition"].SetValue(JadeCameraManager.ActiveCamera.Position);
+			if (effect.Parameters["MaterialSpecularColor"] != null)
+				effect.Parameters["MaterialSpecularColor"].SetValue(MaterialSpecularColor);
 
-            if (effect.Parameters["LightDirection"] != null)
-                effect.Parameters["LightDirection"].SetValue(new Vector3(1, -1, -1));
-
-            if (effect.Parameters["LightDiffuseColor"] != null)
-                effect.Parameters["LightDiffuseColor"].SetValue(DiffuseLightColor);
-
-            if (effect.Parameters["DiffuseColor"] != null) 
-                effect.Parameters["DiffuseColor"].SetValue(DiffuseLightColor);
-
-            if (effect.Parameters["LightSpecularColor"] != null)
-                effect.Parameters["LightSpecularColor"].SetValue(SpecularLightColor);
-
-            if (effect.Parameters["SpecularPower"] != null) 
-                effect.Parameters["SpecularPower"].SetValue(SpecularPower);
+			if (effect.Parameters["MaterialSpecularPower"] != null)
+				effect.Parameters["MaterialSpecularPower"].SetValue(MaterialSpecularPower);
         }
     }
 }

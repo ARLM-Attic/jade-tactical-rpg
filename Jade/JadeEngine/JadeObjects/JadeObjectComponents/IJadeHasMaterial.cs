@@ -4,9 +4,9 @@ namespace JadeEngine.JadeObjects.JadeObjectComponents
 {
     public interface IJadeHasMaterial : IJadeObjectComponent
     {
-        void SetAmbientLightColor(Vector3 color);
-        void SetDiffuseLightColor(Vector3 color);
-        void SetSpecularPower(float power);
+    	void SetMaterialDiffuseColor(Vector4 color);
+        void SetMaterialSpecularColor(Vector4 color);
+    	void SetMaterialSpecularPower(float power);
 
         void SetMaterialProperties();
     }

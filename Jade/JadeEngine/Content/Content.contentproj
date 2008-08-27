@@ -39,13 +39,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Shaders\BasicShader.fx">
-      <Name>BasicShader</Name>
-      <Importer>EffectImporter</Importer>
-      <Processor>EffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Shaders\PostInvert.fx">
       <Name>PostInvert</Name>
       <Importer>EffectImporter</Importer>
@@ -53,18 +46,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Shaders\Dof.fx">
-      <Name>Dof</Name>
+    <None Include="Shaders\BasicEffect.fx">
+      <Name>BasicEffect</Name>
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Shaders\TransformTexture.fx">
-      <Name>TransformTexture</Name>
-      <Importer>EffectImporter</Importer>
-      <Processor>EffectProcessor</Processor>
-    </Compile>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\v3.0\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

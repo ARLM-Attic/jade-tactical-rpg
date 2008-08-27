@@ -16,8 +16,7 @@ namespace Jade
         public static readonly float CAMERA_SPEED = 0.001f;
 
         static JadeGame game = new JadeGame();
-        static JadeEffect shader = new JadeEffect(@"Content\Shaders\TransformTexture");
-        static JadeEffect basicShader = new JadeEffect(@"Content\Shaders\BasicShader");
+		static JadeEffect basicEffect = new JadeEffect(@"Content\Shaders\BasicEffect");
         static JadeKeyboardDevice keyboard = new JadeKeyboardDevice();
         static JadeMouseDevice mouse = new JadeMouseDevice();
         static bool Clicked { get; set; }
@@ -37,9 +36,6 @@ namespace Jade
         static void Main(string[] args)
         {
             sword.SetScale(new Vector3(0.25f));
-            sword.SetAmbientLightColor(new Vector3(0.2f));
-            sword.SetDiffuseLightColor(new Vector3(0.2f));
-            sword.SetSpecularLightColor(new Vector3(0.0f));
             sword.SetPosition(new Vector3(sword.Position.X, sword.Position.Y, sword.Position.Z - 2.5f));
 
             game.IsMouseVisible = true;
@@ -53,9 +49,8 @@ namespace Jade
             mouse.OnClick += mouse_OnClick;
             mouse.OnRelease += mouse_OnRelease;
 
-            JadeShaderManager.AddEffect("TT", shader);
-            JadeShaderManager.AddEffect("BS", basicShader);
-            skybox.ShaderLabel = "TT";
+			JadeShaderManager.AddEffect("BS", basicEffect);
+			skybox.ShaderLabel = "BS";
             sword.ShaderLabel = "BS";
 
             JadeObjectManager.AddObject(skybox);
