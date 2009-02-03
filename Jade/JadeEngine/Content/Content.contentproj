@@ -46,11 +46,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\BasicEffect.fx">
+    <Compile Include="Shaders\BasicEffect.fx">
       <Name>BasicEffect</Name>
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
-    </None>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\v3.0\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
